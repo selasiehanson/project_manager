@@ -1,0 +1,103 @@
+<html>
+  <head>
+  <script type="text/javascript" src='javascripts/jquery-1.6.2.min.js'></script>
+  <script type="text/javascript" src='javascripts/Jquery.tmpl.min.js'></script>
+  <script type="text/javascript" src='javascripts/underscore.js'></script>
+  <script type="text/javascript" src='javascripts/backbone.js'></script>
+  <script type="text/javascript" src='javascripts/app.js'></script>
+
+  <script type="text/template" id="project-tmpl2">
+      <% for (var i=0; i < projects.length; i++){ %>
+             
+              <div class="menu-item" id="<%=  projects[i].cid %>">                         
+                <a href="#projects/<%= projects[i].attributes.title %> " class="title">
+                    <%= projects[i].attributes.title %> 
+                </a> 
+              </div>          
+            
+      <% } %>
+  </script>
+
+  <script type="text/template" id="project-tmpl">
+      <div id='list'>
+
+          <div id='list-title'>Projects:</div>
+          <div id='new_todo_div'>
+            <input type='text' name='new_project' id='new_todo' value='Create New Project'/>
+          </div>
+            <% for (var i=0; i < projects.length; i++){ %>
+                   
+                    <div class="menu-item" id="<%=  projects[i].cid %>">                         
+                      <a href="#projects/<%= projects[i].attributes.title %> " class="title">
+                          <%= projects[i].attributes.title %> 
+                      </a> 
+                    </div>          
+                  
+            <% } %>
+        </div>
+        
+  </script>
+
+  <script type="text/template" id="tasks-tmpl"> 
+     <div id='list'>
+          <div id='list-title'>Tasks:</div>
+          <div id='new_todo_div'>
+            <input type='text' name='new_todo' id='new_todo' value=''/>
+          </div>                         
+          <% for (var i=0; i < tasks.length; i++){ %>
+                  <div class="menu-item" id="task"> 
+                    
+                       <a href="#tasks/<%= i %> " class="title">
+                            <%= tasks[i] %> 
+                        </a>
+                  </div> 
+          <% } %>           
+        </div>
+  </script>
+
+  <script type="text/template" id='project-full-tmpl'>
+
+        <div id='projects_in_full'>
+
+            <% for (var i=0; i < projects.length; i++){ %>
+                <li> <%= projects[i].attributes.title %> </li>
+            <% } %>    
+        </div>
+
+  </script>
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+  </head>
+  <body>
+    <div id='top'>PROJECT MANAGER</div>
+  <div id="content">
+    <div class="side_bar" id='left'>
+
+      <div id='quick_buttons'>
+         <a href='#project/new' class='btn primary'>P</a> 
+         <a href='#tasks/all' class='btn primary'>T</a> 
+         <a href='' class='btn primary'>S</a> 
+
+      </div>
+      <ul id='menu'>
+
+        <li>Outstanding Tasks</li>
+        <li>Completed Tasks</li>
+        <li>New Projects</li>
+        <li>Completed Projects</li>
+        <li>All Projects</li>
+        <li>Managers</li>
+        <li>Teams</li>
+      </ul> 
+    </div>
+    <div id="center_pane">
+      <div id="projects_and_tasks">
+        <div id='projects'></div>
+       
+    </div>
+    <div class='side_bar'id='right'>
+
+    </div>
+  </div>
+  </body>
+</html>
