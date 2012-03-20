@@ -5,6 +5,7 @@ $(function(){
 
 
 	var ProjecCollection  = Backbone.Collection.extend({
+		url : '/projects',
 		model : Project
 	});
 
@@ -48,7 +49,8 @@ $(function(){
 	var singleTaskView = Backbone.View.extend({
 
 		events: {
-	        'keypress #new_todo':  'createNewTask'
+	        'keypress #new_todo':  'createNewTask',
+	        'click' : 'clearInput'
     	},
     		
 		initialize : function (){
@@ -61,10 +63,48 @@ $(function(){
 			 	return;
 			console.log(text);
 		},
-		
+		clearInput : function(e){
+			
+			var text = $.trim(this.input.val());
+			if(text.toLocaleLowerCase() == "create new task")
+				this.input.val("");
+		},
 		render : function (){
 			//console.log("View created");
 
+			return this;
+		}
+
+	});
+
+	var singleProjectView = Backbone.View.extend({
+		el : '#project_container',
+		events: {
+	        'keypress #new_project':  'createNewProject',
+	        'click' : 'clearInput'
+    	},
+    		
+		initialize : function (){
+			this.input = $("#new_project");
+		},
+		clearInput : function(e){
+			
+			var text = $.trim(this.input.val());
+			if(text.toLocaleLowerCase() == "create new project")
+				this.input.val("");
+		},
+		createNewProject : function (e){
+			
+			var text = this.input.val();
+			if(!text || e.keyCode !=13)
+			 	return;
+			console.log(text);
+			this.clearInput();
+		},
+		
+		render : function (){
+			//console.log("View created");
+			console.log("this has been called");
 			return this;
 		}
 
@@ -83,79 +123,87 @@ $(function(){
 	});
 
 
+	var projectCollection  = new ProjecCollection(); 
+	//projectCollection.fetch({add: true});
 	var Navigator = Backbone.Router.extend ({
 		data: null,
 		view : null,
 		currentProject : null,
 		routes : {
 			"projects/:title" : 'showTasks',
-			'project/new' : 'newProject',
-			'tasks/all' : 'defaultRoute' ,
+			'project/all' : 'showProjects',
+			'tasks/summary' : 'showSummarizedTasks' ,
 			'tasks/:id' : 'showTaskInfo',
 			'*actions' : 'defaultRoute'	
 		},
 		
 		initialize : function (){
 			
-			var data = [
-				{title : "Project 1", tasks :["one" , "two","three","four","five","six","seven","eight", "nine", "ten"]},
-				{title : "Project 2", tasks :["one" , "two","three","four","five","six","seven","eight"]},
-				{title : "Project 3", tasks :["one" , "two","three","four","five","six"]},
-				{title : "Project 4", tasks :["one" , "two","three","four"]},
-				{title : "Project 5", tasks :["one" , "two"]},
-				{title : "Project 6", tasks :['one'] }
-			];
-			
-			window.data = this.data = new ProjecCollection(data);
 			
 			//this.view = new ProjectsMiniView({model : this.data});
 			//this.view.render();
 
 			//var st = new singleTaskView({el: 'body'});
 			//st.render();
-			Backbone.history.loadUrl();
-
+			//Backbone.history.loadUrl();
+			Backbone.history.start();
+			//console.log("called");
 			return this;
 		},
 		defaultRoute : function () {
-			this.currentProject = this.data.at(0).get("title");
-			this.showTasks(this.currentProject);
+			console.log('called again');
+			var self =  this;
+			projectCollection.fetch({
+				add : true,
+				success : function	(col, res){
+					console.log(col)
+					console.log(res)
+					this.currentProject = col.at(0).get("title");
+					self.showTasks(self.currentProject);
+				}
+			});
+			
 		},
-		newProject : function () {
+		showProjects : function () {
 			//console.log(data);
-			var view =  new ProjectsView({model : this.data});
+			var view =  new ProjectsView({model : projectCollection});
 			view.render();
+
+			var sp = new singleProjectView({});
+			sp.render();
 		},
 		showTasks : function (title) {
 
 			title = $.trim(title);
 
-			var project = data.find(function(n){
+			var project = projectCollection.find(function(n){
 			  return n.get('title') == title
 			});
 
+			var tasks = [];
 			if(project){
 				this.currentProject = title;
-				var tasks = project.get("tasks");
+				tasks = project.get("tasks");
 				$(".active").removeClass("active");
             	$("#" + project.cid).addClass("active");
 				//var data  = new TaskCollection(tasks);
-				var view = new TaskView({model : new Task(tasks)});
-				view.render();	
-				var st = new singleTaskView({el: 'body'});
-				st.render();
 			}
-			
+			var view = new TaskView({model : new Task(tasks)});
+			view.render();	
+			var st = new singleTaskView({el: '#tasks_container'});
+			st.render();
 		},
 		showTaskInfo : function (id){
 			console.log(id);
-		}
+		},
+		showSummarizedTasks : function(all){
 
+		}
 		
 
 	});
 
 	var navigatorRouter  = new Navigator();
-	Backbone.history.start();
+	
 });
 

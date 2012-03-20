@@ -19,11 +19,11 @@
   </script>
 
   <script type="text/template" id="project-tmpl">
-      <div id='list'>
+      <div id='project_container' class='list'>
 
           <div id='list-title'>Projects:</div>
           <div id='new_todo_div'>
-            <input type='text' name='new_project' id='new_todo' value='Create New Project'/>
+            <input type='text' name='new_project' id='new_project' class='t-inputs' value='Create New Project'/>
           </div>
             <% for (var i=0; i < projects.length; i++){ %>
                    
@@ -39,10 +39,10 @@
   </script>
 
   <script type="text/template" id="tasks-tmpl"> 
-     <div id='list'>
+     <div id='tasks_container' class='list'>
           <div id='list-title'>Tasks:</div>
           <div id='new_todo_div'>
-            <input type='text' name='new_todo' id='new_todo' value=''/>
+            <input type='text' name='new_todo' class='t-inputs' id='new_todo' value='Create New Task'/>
           </div>                         
           <% for (var i=0; i < tasks.length; i++){ %>
                   <div class="menu-item" id="task"> 
@@ -74,8 +74,8 @@
     <div class="side_bar" id='left'>
 
       <div id='quick_buttons'>
-         <a href='#project/new' class='btn primary'>P</a> 
-         <a href='#tasks/all' class='btn primary'>T</a> 
+         <a href='#project/all' class='btn primary'>P</a> 
+         <a href='#tasks/summary' class='btn primary'>T</a> 
          <a href='' class='btn primary'>S</a> 
 
       </div>
