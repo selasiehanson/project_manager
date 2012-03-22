@@ -109,6 +109,12 @@ body {
 
 }
 
+
+#top  a {
+	color: white;
+	text-decoration : none;
+}
+
 .list {
 	width: 900px;
 	margin-left: 15px;
@@ -158,6 +164,7 @@ body {
 }
 
 .menu-item {	
+	overflow: hidden;
 	border-bottom: 1px solid #DDD;
 	background-color: #F1F1F1;
 }
@@ -167,7 +174,7 @@ body {
 	cursor: pointer;
 }	
 
-.menu-item a{ 
+.menu-item .title{ 
 	padding: 10px;
 	text-decoration: none;
 	color: #555;
@@ -226,4 +233,32 @@ body {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	border-color: #0064CD #0064CD #003F81;
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.list .the-item {
+	float: left;
+	width: 80%;
+}
+
+
+
+
+.controls .edit {
+	background-image: url('../images/edit.png');
+	width : 16px;
+	height : 16px;
+	display: inline-block;
+}
+
+.controls .delete {
+	background-image: url('../images/delete.png');
+	width : 16px;
+	height : 16px;
+	display: inline-block;
+}
+.list .controls {
+	font-size: 12px;
+	float: right;
+	padding: 12px;
+	display: none
 }

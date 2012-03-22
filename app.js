@@ -5,6 +5,12 @@
 
 var express = require('express')
   , routes = require('./routes');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/project_manager_dev');
+//mongoose.connect('mongodb://localhost/project_manager_dev');
+
+
+
 
 var app = module.exports = express.createServer();
 
@@ -43,7 +49,15 @@ app.configure('production', function(){
 
 // Routes
 app.get('/', routes.index);
-app.get('/projects',routes.projects);
+
+//Projects
+app.get('/projects',routes.getProjects);
+app.post('/projects', routes.createProject);
+
+//Tasks
+app.get('/tasks',routes.getTasks);
+app.post('/tasks',routes.createTask);
+app.del('/tasks',routes.deleteTask);
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

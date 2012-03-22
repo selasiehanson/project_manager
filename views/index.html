@@ -28,7 +28,7 @@
             <% for (var i=0; i < projects.length; i++){ %>
                    
                     <div class="menu-item" id="<%=  projects[i].cid %>">                         
-                      <a href="#projects/<%= projects[i].attributes.title %> " class="title">
+                      <a href="#projects/<%= projects[i].attributes._id %> " class="title">
                           <%= projects[i].attributes.title %> 
                       </a> 
                     </div>          
@@ -44,32 +44,28 @@
           <div id='new_todo_div'>
             <input type='text' name='new_todo' class='t-inputs' id='new_todo' value='Create New Task'/>
           </div>                         
-          <% for (var i=0; i < tasks.length; i++){ %>
-                  <div class="menu-item" id="task"> 
-                    
-                       <a href="#tasks/<%= i %> " class="title">
-                            <%= tasks[i] %> 
-                        </a>
-                  </div> 
-          <% } %>           
+                  
         </div>
   </script>
 
-  <script type="text/template" id='project-full-tmpl'>
-
-        <div id='projects_in_full'>
-
-            <% for (var i=0; i < projects.length; i++){ %>
-                <li> <%= projects[i].attributes.title %> </li>
-            <% } %>    
-        </div>
-
+  <script type='text/template' id='task-tmpl'>
+    <div class="menu-item" id="<%= task.cid %>"> 
+         <div class='the-item'>
+         <a href="#tasks/<%= task.attributes._id %> " class="title">
+              <%= task.attributes.title %> 
+          </a>
+          </div>
+          <div class='controls'>
+            <a class='edit'></a>
+            <a class='delete' ></a> 
+          </div>
+    </div> 
   </script>
 
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
   </head>
   <body>
-    <div id='top'>PROJECT MANAGER</div>
+    <div id='top'> <a href="/">PROJECT MANAGER</a> </div>
   <div id="content">
     <div class="side_bar" id='left'>
 
