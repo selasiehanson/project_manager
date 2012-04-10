@@ -53,11 +53,14 @@ app.get('/', routes.index);
 //Projects
 app.get('/projects',routes.getProjects);
 app.post('/projects', routes.createProject);
+app.put('/projects/:id',routes.updateProject);
+app.del('/projects/:id',routes.deleteProject);
 
 //Tasks
 app.get('/tasks',routes.getTasks);
 app.post('/tasks',routes.createTask);
-app.del('/tasks',routes.deleteTask);
+app.put('/tasks/:id',routes.updateTask);
+app.del('/tasks/:id',routes.deleteTask);
 
-app.listen(3000);
+app.listen(3001);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

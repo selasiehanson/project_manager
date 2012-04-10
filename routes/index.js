@@ -39,6 +39,39 @@ exports.createProject  =  function	(req,res){
 	
 }
 
+exports.updateProject =  function (req, res){
+
+
+}
+
+exports.deleteProject =  function (req, res){
+	var id = mongoose.Types.ObjectId.fromString(req.params.id);
+	Task.find({project :  id},function (err,docs){
+		if(docs.length > 0 ){
+			res.send({
+				message : '"Cannot delete this project. There are some stasks asscociated with it");'
+			});
+		}
+		else {
+			Project.findById(id, function (err,doc){
+				if(doc){
+					doc.remove(function(err){
+						res.send({
+							message : "Project deleted"
+						});
+					});
+				}else {
+					res.send({
+						message : "You are trying to delete a project that does not exist"
+					});
+				}
+			});
+
+			
+		}
+	});
+}
+
 exports.getTasks = function (req, res) {
 	var data = req.query;
 	var id  = data.projectId;
@@ -71,13 +104,26 @@ exports.createTask  =  function(req,res){
 }
 
 
-exports.updateTask =  function(){
-
+exports.updateTask =  function(req, res){
+	
+	var id = mongoose.Types.ObjectId.fromString(req.params.id);
+	var title =  req.body.title;
+	Task.findById(id, function (err, doc){
+		doc.title = title;
+		doc.save(function(err, doc){
+			res.send({message: "Task Updated sucessfully"});	
+		});
+		
+	});
 }
 
 exports.deleteTask =  function (req, res){
-	console.log(req)
-	res.send({
-		message : 'task deleted sucessfully'
-	})
+	var id = mongoose.Types.ObjectId.fromString(req.params.id);
+	Task.findById(id, function (err, doc){
+  		doc.remove(function(err){
+  			res.send({
+				message : 'task deleted sucessfully'
+			});
+  		});
+	});
 }
