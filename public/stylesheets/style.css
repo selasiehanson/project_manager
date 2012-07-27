@@ -1,7 +1,10 @@
 body {
 	margin: 0px;
 	font-family: Arial, "MS Trebuchet", sans-serif;
-	background-image: url('../images/pbg.png');
+	/*background-image: url('../images/pbg.png');*/
+	/*background-image: url('../images/table_back.png');*/
+	background-color:  #EDF3F5;
+	/*background-color: #F4F4F4;*/
 }
 
 #content {
@@ -9,6 +12,11 @@ body {
 }
 
 
+.page_container {
+	/*margin: 0px;
+	padding: 0px;*/
+	margin-top: -20px;
+}
 
 #content .side_bar #quick_buttons {
 	margin-left: 30px;
@@ -39,34 +47,12 @@ body {
 	height: 32px;
 }
 
-#menu li a.teams{
-	background: url('../images/user.png') no-repeat;
+.widget_container .well{
+	background:   url('../images/table_back.png') #FDFDFD;
+	min-height: 600px;
+	border: 1px solid #CCC;
 }
 
-#menu li a.outstanding_tasks {
-	background: url('../images/outstanding_tasks.png') no-repeat;
-}
-
-
-#menu li a.completed_tasks{
-	background: url('../images/completed_tasks.png') no-repeat;	
-}
-
-#menu li a.new_projects {
-	background: url('../images/new_projects.png') no-repeat;
-}
-
-#menu li a.completed_projects{
-	background: url('../images/completed_projects.png') no-repeat;	
-}
-
-#menu li a.all_projects{
-	background: url('../images/all_projects.png') no-repeat;	
-}
-
-#menu li a.managers {
-	background: url('../images/managers.png') no-repeat;	
-}
 
 #content .side_bar  #menu li a:hover { 
 	cursor:  pointer;
@@ -74,9 +60,11 @@ body {
 }
 #center_pane 
 {	
-	padding: 0px;
+	/*padding: 0px;
 	float: left;
-	overflow: hidden;
+	overflow: hidden;*/
+	background: white;
+	margin-top: 20px;
 }
 
 #content #right {
@@ -89,24 +77,8 @@ body {
 #content #left {
 	float: left;
 	width: 220px;
-	/*border-right: 1px solid #DDD;*/
-
 }
 
-#content .side_bar {
-	/*background: #EEE;*/
-	font-size : 13px;
-	/*background-color:  #F2F4F9;*/
-	height: 100%;
-	padding: 10px 0px 10px 12px;
-}
-
-
-#projects_and_tasks {
-/*	width: 850px;*/
-	/*overflow: hidden;
-	padding: 20px;*/
-}
 
 #projects {
 	width: 200px;
@@ -118,55 +90,47 @@ body {
 }
 
 
-
 #top {
-	/*font-family: Arial, "MS Trebuchet", sans-serif;
-	
-	background: #DADADA;
-	border-bottom: 1px solid #CCC;
-	
-	padding: 10px 40px;
-	font-weight: bold;*/
-	padding: 10px 40px;
-	-webkit-box-shadow: 0 0 4px 0 #666,inset 0 1px 0 0 rgba(255,255,255,0.2),inset 0 -1px 0 0 rgba(4,15,34,0.2);
-	-moz-box-shadow: 0 0 4px 0 #666,inset 0 1px 0 0 rgba(255,255,255,0.2),inset 0 -1px 0 0 rgba(4,15,34,0.2);
-	-ms-box-shadow: 0 0 4px 0 #666,inset 0 1px 0 0 rgba(255,255,255,0.2),inset 0 -1px 0 0 rgba(4,15,34,0.2);
-	-o-box-shadow: 0 0 4px 0 #666,inset 0 1px 0 0 rgba(255,255,255,0.2),inset 0 -1px 0 0 rgba(4,15,34,0.2);
-	box-shadow: 0 0 4px 0 #666,inset 0 1px 0 0 rgba(255,255,255,0.2),inset 0 -1px 0 0 rgba(4,15,34,0.2);
-	background-color: #3872C2;
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3872C2),color-stop(100%, #29548F));
-	background-image: -webkit-linear-gradient(top, #3872C2,#29548F);
-	background-image: -moz-linear-gradient(top, #3872C2,#29548F);
-	background-image: -ms-linear-gradient(top, #3872C2,#29548F);
-	background-image: -o-linear-gradient(top, #3872C2,#29548F);
-	background-image: linear-gradient(top, #3872C2,#29548F);
-	left: 0;
-	font-size: 16px;
 	color: white;
-
-	/*position: fixed;*/
-	/*top: 0;*/
-
 }
-
-
 #top  a {
 	color: white;
 	text-decoration : none;
 }
 
+a.login_name {
+	color: #2B4271 !important;
+	font-weight: bold;
+}
+
 .list {
-	width: 920px;
-	margin-left: 15px;
-	float: left;
+	
 	
 }
 
+.list .new_todo_div
+{
+	margin-bottom: 10px;
+}
 .list .houser{
 	padding: 7px;
-	background: #F1F1F1;
+	/*background: #F1F1F1;*/
 	border: 1px solid #CCC;
-	margin-top: 50px;
+	
+}
+
+.list .tasks_total ,.list .projects_total {
+	margin-bottom: 10px;
+	font-size: 13px;
+	
+}
+
+.list .tasks_total .total , .list .projects_total .total{
+	background : #3A87AD;
+}
+
+.list .projects_total .total{
+	background : #F89406;		
 }
 
 .list #list-title {
@@ -178,42 +142,24 @@ body {
 	font-family: sans-serif;
 }
 
-.list ul {
-	margin: 0px;
-	padding: 0px;
-	background: #F1F1F1;
-	border: 1px solid #DDD;
-}
-
-.list li{ 
-	border-bottom: 1px solid #DDD;
-	padding: 10px;
-	list-style : none;
-	padding-left: 25px;
-}	
 
 input[type='text'] {
-	width: 100%;
-	height: 40px;
-	color: #777;
-	margin: 0px;
-	padding: 6px;
-	font-size: 20px;
-	font-style: italic;
-
+	width: 98%;
+	font-size: 18px;
+	line-height: 30px;
+	height: 30px;
 }
 
 .menu-item {	
 	overflow: hidden;
 	border-bottom: 1px solid #DDD;
-	background-color: #F1F1F1;
+	height: 65px;
 }
 
 
 .active  {
-	background-color: #5CAEE4;
-	
-	border: 1px solid white;
+	/*background-color: #5CAEE4;*/
+	/*border: 1px solid white;*/
 }
 
 
@@ -226,11 +172,11 @@ input[type='text'] {
 
 
 .menu-item .title{ 
-	padding: 10px;
+	padding: 2px;
 	text-decoration: none;
-	color: #555;
+	/*color: #555;*/
 	font-family: Arial;
-	font-size: 15px;
+	font-size: 12px;
 	width: 95%;
 	display: block;
 }
@@ -303,8 +249,8 @@ input[type='text'] {
 }
 
 .list .the-item {
-	float: left;
-	width: 80%;
+	/*float: left;*/
+	width: 100%;
 }
 
 
@@ -313,22 +259,16 @@ input[type='text'] {
 }
 
 .controls .edit_link {
-	background-image: url('../images/edit.png');
-	width : 16px;
-	height : 16px;
-	display: inline-block;
+
 }
 
 .controls .delete_link {
-	background-image: url('../images/delete.png');
-	width : 16px;
-	height : 16px;
-	display: inline-block;
+
 }
 .list .controls {
 	font-size: 12px;
-	float: right;
 	padding: 12px;
+	padding-bottom: 0px;
 	display: none
 }
 
@@ -347,3 +287,131 @@ input[type='text'] {
 	font-style : italic;
 }
 
+.table thead {
+	background: #CCC;
+	background: -moz-linear-gradient(top, #EEE 0%, #CCC 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#EEE), color-stop(100%,#CCC));
+	background: -webkit-linear-gradient(top, #EEE 0%,#CCC 100%);
+	background: -o-linear-gradient(top, #EEE 0%,#CCC 100%);
+	background: -ms-linear-gradient(top, #EEE 0%,#CCC 100%);
+	background: linear-gradient(top, #EEE 0%,#CCC 100%);
+}
+
+.projects_total .badge, .tasks_total .badge {
+	margin-right: 5px;
+}
+
+.list .date_created {
+	font-size: 12px;
+	font-family: Arial;
+
+}
+
+.list .projects_total , .list .tasks_total{
+	/*font-weight: bold;*/
+	margin-top: 10px;
+	color: #4E691F;
+	float: left;
+}
+
+.hero-unit {
+	margin-top : 20px;
+	background : none;
+	/*padding: 0;*/
+}
+
+.actions{
+	background : none;
+}
+
+.list_view {
+	padding-top: 20px;
+	/*background-image: url('../images/pbg.png');*/
+	/*background: url('../images/table_back.png') #292E34;*/
+}
+
+.list_view li{
+	list-style: none;
+	padding-top: 15px;
+}
+
+.list_view .accordion a{
+	text-decoration : none;
+	color: #2B4271;
+	font-weight:bold;
+	
+}
+
+.list_view .accordion .accordion-heading {
+	background: #82A6CA;
+}
+.list_view .accordion .active-head a {
+	color : white ;
+}
+
+.list_view .accordion .in 
+.list_view .accordion .accordion-inner a{
+	/*color: #08C;*/
+	color : #888;
+}
+
+.list_view .accordion .accordion-inner {
+	background: white
+}
+.list_view li i{
+	padding-right : 5px;
+}
+
+.navbar-inner{
+	background: #82A6CA;
+}
+
+.navbar.navbar-static.navbar_as_heading .navbar-inner{
+	margin: -20px -20px 20px -20px;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	background: #82A6CA;
+}
+
+.navbar.navbar-static.navbar_as_heading .navbar-inner .brand{
+	text-transform: uppercase;
+	font-size: 12px;
+	font-weight: bold;
+	color: #EFEFEF;
+	margin-top: 5px;
+} 
+
+
+.list .pagination {
+	margin: 1px 0;
+	float: right;
+}
+
+.list .pagination ul {
+	background:  none;
+	border :0px;
+} 
+
+.list .pagination li a{
+	font-size: 11px;
+	line-height: 26px;
+}
+
+
+.pagination a {
+	border: 1px solid #AAA;
+	border-left-width: 0;
+	background: white;
+	background: -moz-linear-gradient(top, white 0%, #CCC 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,white), color-stop(100%,#CCC));
+	background: -webkit-linear-gradient(top, white 0%,#CCC 100%);
+	background: -o-linear-gradient(top, white 0%,#CCC 100%);
+	background: -ms-linear-gradient(top, white 0%,#CCC 100%);
+	background: linear-gradient(top, white 0%,#CCC 100%);
+}
+
+#tasks_project_header {
+	width: 80%;
+	color: #333;	
+}

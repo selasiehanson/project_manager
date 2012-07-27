@@ -1,0 +1,143 @@
+<html>
+  <head>
+  <script type="text/javascript" src='javascripts/jquery-1.6.2.min.js'></script>
+  <script type="text/javascript" src='javascripts/Jquery.tmpl.min.js'></script>
+  <script type="text/javascript" src='javascripts/underscore.js'></script>
+  <script type="text/javascript" src='javascripts/backbone.js'></script>
+  <script type="text/javascript" src='javascripts/app.js'></script>
+
+
+
+  <script type="text/template" id="task-stats-tmpl" >
+    <div>
+    <span class='remaining'> <%= stats.remaining %>  </span>   remaining.
+    <span class='done'> <%= stats.done %> </span>    out of 
+    <span class='total'> <%= stats.total%> </span>   completed.
+    </div>
+  </script>
+  <script type="text/template" id="project-stats-tmpl" >
+    <div>
+    <span class='total'> <%= stats.total%> </span>   Projects in Total.
+    </div>
+  </script>
+  <script type="text/template" id="projects-tmpl">
+      <div id='project_container' class='list'>
+        <div id='list-title'>Projects:</div>
+          <div class='new_todo_div'>
+
+            <input type='text' name='new_project' id='new_project' class='t-inputs' value='Create New Project'/>
+          </div>      
+          <div class='projects_total'> </div>                     
+          <div class='houser'> </div>   
+      </div>
+  </script>
+
+  <script type="text/template" id="project-tmpl">
+  <div class="menu-item" id="<%=  project.cid %>">  
+      <div class='view'>
+        <div class='the-item'>
+          <a href="#projects/<%= project.attributes._id %> " class="title">
+              <%= project.attributes.title %> 
+          </a> 
+        </div>
+        <div class='controls'>
+          <a class='edit_link'>   </a>
+          <a class='delete_link'> </a> 
+        </div>
+    </div>
+</div>
+  </script>
+
+  <script type="text/template" id="tasks-tmpl"> 
+    <div id='tasks_container' class='list'>
+      <div id='list-title'>Tasks : </div>
+      <div class='new_todo_div'>
+        <input type='text' name='new_todo' class='t-inputs' id='new_todo' value='Create New Task'/>
+      </div> 
+      <div class='tasks_total'> </div>    
+      <div class='houser'></div>
+
+    </div>
+  </script>
+
+  <script type='text/template' id='task-tmpl'>
+    <div class="menu-item" id="<%= task.cid %>">
+        <div class='view'>
+          <% var done = "title ";  var checked = false; %>
+          <% if (task.attributes.status == "done") { %>
+          <% done += "done" %>
+          <% checked = true %>
+          <% } %>
+          
+          <div class='the-item'>
+            <% if (checked) {%>
+              <input class='checkbox' type='checkbox' checked="<%= checked %>" />
+            <%} else {%>
+            <input class='checkbox' type='checkbox' />
+            <% } %>
+            <a href="#tasks/<%= task.attributes._id %> " class="<%= done %>">
+                <%= task.attributes.title %> 
+            </a>
+          </div>
+            <div class='controls'>
+              <a class='edit_link'>   </a>
+              <a class='delete_link'> </a> 
+            </div>
+          </div>
+          <input type='text' class='edit' />
+    </div> 
+  </script>
+
+  <script type='text/template' id='task-info-tmpl'>
+      <div class='task_info_panel'>
+        <p>
+          <label> 
+          <span class='key'>From Project : </span> 
+          <span class='value'><%= info.project.title %>  </span>
+          </label>
+        </p>
+        <p>
+          <label> 
+          <span class='key'>Created On : </span> 
+          <span class='value'><%= new Date(info.task.get('created_on')).toGMTString() %>  </span> 
+          </label>
+        </p>
+        <p>
+          <label> 
+          <span class='key'>Assigned To :</span> 
+          <span class='value'><%= info.task.get('assignedTo') %>  </span>
+          </label>
+        </p>
+        <p>
+          <label> 
+          <span class='key'>Status : </span> 
+          <span class='value'><%= info.task.get('status') %>  </span>
+          </label>
+        </p>
+      </div>
+  </script>
+
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+  </head>
+  <body>
+    <div id='top'> <a href="/">TODOs</a> </div>
+  <div id="content">
+    <div class="side_bar" id='left'>
+      <div id='quick_buttons'>
+         <a href='#project/all' class='btn primary'>P</a> 
+         <a href='#tasks/summary' class='btn primary'>T</a> 
+         <a href='' class='btn primary'>S</a> 
+      </div>
+      
+    </div>
+    <div id="center_pane">
+      <div id="projects_and_tasks">
+        <div id='projects'></div>
+      </div>
+    </div>
+    <div class='side_bar'id='right'>
+      <div id='task_info_panel'></div>
+    </div>
+  
+  </body>
+</html>

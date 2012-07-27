@@ -5,6 +5,7 @@ var ObjectId = Schema.ObjectId;
 var TaskSchema = new Schema ({
 	title : String ,
 	created_on : Date,
+	updated_at : Date,
 	commenced_on : Date,
 	completed_on : Date,
 	assignedTo : String,

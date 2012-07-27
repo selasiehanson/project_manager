@@ -7,10 +7,7 @@ var express = require('express')
   , routes = require('./routes');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/project_manager_dev');
-//mongoose.connect('mongodb://localhost/project_manager_dev');
-
-
-
+//mongoose.connect('mongodb://localhost/project_manager_live');
 
 var app = module.exports = express.createServer();
 
@@ -49,6 +46,8 @@ app.configure('production', function(){
 
 // Routes
 app.get('/', routes.index);
+app.get('/index_old.html', routes.index2)
+
 
 //Projects
 app.get('/projects',routes.getProjects);

@@ -1,71 +1,230 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-  <script type="text/javascript" src='javascripts/jquery-1.6.2.min.js'></script>
-  <script type="text/javascript" src='javascripts/Jquery.tmpl.min.js'></script>
-  <script type="text/javascript" src='javascripts/underscore.js'></script>
-  <script type="text/javascript" src='javascripts/backbone.js'></script>
-  <script type="text/javascript" src='javascripts/app.js'></script>
+    <meta charset="utf-8">
+    <title>Todos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 
 
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 
 
-  <script type="text/template" id="projects-tmpl">
-      <div id='project_container' class='list'>
-        <div id='list-title'>Projects:</div>
-          <div id='new_todo_div'>
-
-            <input type='text' name='new_project' id='new_project' class='t-inputs' value='Create New Project'/>
-          </div>                         
-          <div class='houser'> </div>   
-      </div>
-  </script>
-
-  <script type="text/template" id="project-tmpl">
-      
-          <div class="menu-item" id="<%=  project.cid %>">  
-              <div class='view'>
-
-                <div class='the-item'>
-                  <a href="#projects/<%= project.attributes._id %> " class="title">
-                      <%= project.attributes.title %> 
-                  </a> 
-                </div>
-                <div class='controls'>
-                  <a class='edit_link'>   </a>
-                  <a class='delete_link'> </a> 
-                </div>
-            </div>
-        </div>
-  </script>
-
-  <script type="text/template" id="tasks-tmpl"> 
-    <div id='tasks_container' class='list'>
-      <div id='list-title'>Tasks : </div>
-      <div id='new_todo_div'>
-        <input type='text' name='new_todo' class='t-inputs' id='new_todo' value='Create New Task'/>
-      </div>   
-      <div class='houser'></div>
+ <!-- PAGINATION -->
+<script type="text/template" id="pagination-tmpl">  
+  <div class='projects_total'>
+    <div>
+      <span class='badge badge-warning'> <%= page.totalRecords   %> </span>   Projects in Total.
     </div>
-  </script>
+  </div>           
+  <div id='project_pagination' class="pagination"> 
+    <ul>
+      <li><a href="#" class="first">First</a></li>
+      <li><a href="#" class="previous">«</a></li>
+      <li class="active"><a href="#"><%= page.currentPage %>  of <%= page.totalPages %> </a></li>
+      <li><a href="#" class="next">»</a></li>
+      <li><a href="#" class="last">Last</a></li>
+    </ul>
+  </div>
+  
+</script>
+
+<script type="text/template" id="tasks_pagination-tmpl">  
+  <div class='projects_total'>
+      <div>
+        <span class='badge badge-warning'> <%= page.totalRecords%> </span>  Tasks.
+        <span class='badge badge-error'> <%= stats.remaining %>  </span>   Not Done.
+        <span class='badge badge-success'> <%= stats.done %> </span>   Done
+      </div>
+   </div>           
+  <div id='project_pagination' class="pagination"> 
+   
+    <ul>
+      <li><a href="#" class="first">First</a></li>
+      <li><a href="#" class="previous">«</a></li>
+      <li class="active"><a href="#"><%= page.currentPage %>  of <%= page.totalPages %> </a></li>
+      <li><a href="#" class="next">»</a></li>
+      <li><a href="#" class="last">Last</a></li>
+    </ul>
+  </div>
+  
+</script>
+
+<!-- END OF PAGINATON -->
+
+
+
+<!-- CONTAINERS -->
+
+<script type="text/template" id="projects-container-tmpl">
+  <div id='project_container' class='list'>
+    
+      <div class='new_todo_div'>
+        <input type='text' name='new_project' id='new_project' class='t-inputs' value='Create New Project'/>
+      </div>
+
+      <div id='project_navigation'></div>
+      
+      <table class='table  houser' id='projects_view'> 
+        <thead>
+          <tr> 
+            <td>Project</td>
+            <td>Date Created</td>
+            <td> #Tasks</td>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table> 
+  </div>
+</script>
+
+ <script type="text/template" id="tasks-container-tmpl">
+  <div id='tasks_container' class='list'>
+      
+      <div class='new_todo_div'>
+        <input type='text' name='new_todo' class='t-inputs' id='new_todo' value='Create New Task'/>
+      </div> 
+      <div id='tasks_navigation'> </div>     
+      <table class='table houser' id='tasks_view'>
+        <thead>
+          <tr> 
+            <td>Status</td>
+            <td>Task</td>
+          </tr>
+          </thead>
+          <tbody>
+          </tbody>
+      </table>
+
+    </div>
+ </script>
+<!-- END CONTAINERS -->
+
+
+<!-- SINGLE ITEM -->
+<script type="text/template" id="project-tmpl">
+    <td class="menu-item" id="<%=  project.cid %>">  
+        <div class='view'>
+          <div class='the-item'>
+            <a href="#projects/task/<%= project.attributes._id %> " class="title">
+                <%= project.attributes.title %> 
+            </a> 
+          </div>
+          <div class='controls'>
+            <div class="btn-group" style="display: block; ">
+              <button class="btn btn-small edit_link"><i class="icon-pencil"></i> </button>
+              <button class="btn btn-small delete_link"><i class="icon-trash"></i> </button>
+            </div>  
+          </div>
+      </div>
+  </td>
+  
+  <% var x = new Date(project.attributes.created_on).toGMTString() %>
+  <% x = x.split(" ") %>
+  <% var date = x[1] + " " + x[2] + ", " + x[3] %>
+  <td > <span class='date_created'> <%= date %> </span> </td>
+  <td> <span class='badge badge-info'> <%= project.attributes.count %></span></td>
+</script>
+
 
   <script type='text/template' id='task-tmpl'>
-    <div class="menu-item" id="<%= task.cid %>">
+    <% var done = "title ";  var checked = false; %>
+    <% if (task.attributes.status == "done") { %>
+    <%    done += "done" %>
+    <%    checked = true %>
+    <% } %>
+    
+    <% if (checked) {%>
+    <td> <input class='checkbox' type='checkbox' checked="<%= checked %>" /> </td>
+    <%} else {%>
+    <td> <input class='checkbox' type='checkbox' /> </td>
+    <% } %>
+
+    <td class="menu-item" id="<%= task.cid %>">
         <div class='view'>
-          <input class='checkbox' type='checkbox' />
-          <div class='the-item'>
-            <a href="#tasks/<%= task.attributes._id %> " class="title">
-                <%= task.attributes.title %> 
-            </a>
-          </div>
+            <div class='the-item'>
+              <a href="#tasks/<%= task.attributes._id %> " class="<%= done %>">
+                  <%= task.attributes.title %> 
+              </a>
+            </div>
             <div class='controls'>
-              <a class='edit_link'>   </a>
-              <a class='delete_link'> </a> 
+              <div class="btn-group" style="display: block; ">
+                <button class="btn btn-small edit_link"><i class="icon-pencil"></i> </button>
+                <button class="btn btn-small delete_link"><i class="icon-trash"></i> </button>
+              </div>  
             </div>
           </div>
           <input type='text' class='edit' />
-    </div> 
+    </td> 
   </script>
+<!-- SINGLE ITEM END -->
 
+
+<!--PROJECT AND TASKS WIDGET-->
+<script type="text/template" id="pt_widgets_template">
+            <div class='span6'><!-- start of widget -->
+            <div class="widget_container">
+              <div class="well">
+                <div class="navbar navbar navbar-static navbar_as_heading">
+                  <div class="navbar-inner">
+                    <div class="container">
+                      <a class="brand">PROJECTS</a>
+                    </div>
+                  </div>
+                </div>
+                <div id='projects_container'>
+                  
+                </div>
+              </div>
+            </div>
+          </div> <!-- end of widget -->
+          <div class='span6'><!-- start of widget -->
+            <div class="widget_container">
+              <div class="well">
+                <div class="navbar navbar navbar-static navbar_as_heading">
+                  <div class="navbar-inner">
+                    <div class="container">
+                      <a id='tasks_header' class="brand">TASKS  </a>
+                      <a id='tasks_project_header' class="brand"></a>
+                    </div>
+                  </div>
+                </div>
+                <div id='tasks_container'>
+                  
+                </div>
+              </div>
+            </div>
+          </div> <!-- end of widget -->
+<!--END OF PROJECT AND TASKS WIDGET-->
+
+<!--TASK INFO-->
   <script type='text/template' id='task-info-tmpl'>
       <div class='task_info_panel'>
         <p>
@@ -80,14 +239,12 @@
           <span class='value'><%= new Date(info.task.get('created_on')).toGMTString() %>  </span> 
           </label>
         </p>
-
         <p>
           <label> 
           <span class='key'>Assigned To :</span> 
           <span class='value'><%= info.task.get('assignedTo') %>  </span>
           </label>
         </p>
-
         <p>
           <label> 
           <span class='key'>Status : </span> 
@@ -96,36 +253,132 @@
         </p>
       </div>
   </script>
-
-  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
   </head>
   <body>
-    <div id='top'> <a href="/">PROJECT MANAGER</a> </div>
-  <div id="content">
-    <div class="side_bar" id='left'>
-      <div id='quick_buttons'>
-         <a href='#project/all' class='btn primary'>P</a> 
-         <a href='#tasks/summary' class='btn primary'>T</a> 
-         <a href='' class='btn primary'>S</a> 
-      </div>
-      <ul id='menu'>
-        <li> <a href="" class='outstanding_tasks'> Outstanding Tasks </a></li>
-        <li> <a href="" class='completed_tasks'> Completed Tasks </a></li>
-        <li> <a href="" class='new_projects'> New Projects </a></li>
-        <li> <a href="" class='completed_projects'> Completed Projects </a> </li>
-        <li> <a href="#project/all" class='all_projects'> All Projects </a></li>
-        <li> <a href="" class='managers'> Managers </a> </li>
-        <li> <a href="" class='teams'> Teams </a> </li>
-      </ul> 
-    </div>
-    <div id="center_pane">
-      <div id="projects_and_tasks">
-        <div id='projects'></div>
+
+    <div class="navbar navbar-fixed-top" id='top'>
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">TODOs</a>
+          <div class="nav-collapse">
+            <!-- <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul> -->
+            <p class="navbar-text pull-right">Logged in as <a href="#" class='login_name'>Selasie</a></p>
+          </div><!--/.nav-collapse -->
+        </div>
       </div>
     </div>
-    <div class='side_bar'id='right'>
-      <div id='task_info_panel'></div>
-    </div>
-  
-  </body>
+
+    <div class="container-fluid page_container">
+      <div class="row-fluid">
+        
+        <div class="span2 list_view" id='nav_menu'>
+        	<div id="accordion2" class="accordion">
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a href="#collapseOne" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle">
+                  <i class=' icon-th'></i> DashBoard
+                </a>
+              </div>
+              <div class="accordion-body collapse" id="collapseOne" >
+                <div class="accordion-inner">
+                 <ul>
+                 	<li> <a href=""><i class='icon-th'></i>Dashboard</a> </li>
+                 	</ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a href="#collapseTwo" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle">
+                 <i class='icon-th-list'></i> Projects & Tasks
+                </a>
+              </div>
+              <div class="accordion-body in" id="collapseTwo" >
+                <div class="accordion-inner">
+                  <ul>
+                  	<li><a href="#project/all"><i class='icon-th-list'> </i>Projects</a> </li>
+                 	  <li><a href="#tasks/summary"> <i class='icon-th-list'></i> Tasks </a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+       	</div>
+        <div class="span10" id="center_pane">
+          <div class="hero-unit clearfix" id='stage'>
+
+            
+          </div>
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2012</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- Bootstrap Libraries -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap-transition.js"></script>
+    <script src="assets/js/bootstrap-alert.js"></script>
+    <script src="assets/js/bootstrap-modal.js"></script>
+    <script src="assets/js/bootstrap-dropdown.js"></script>
+    <script src="assets/js/bootstrap-scrollspy.js"></script>
+    <script src="assets/js/bootstrap-tab.js"></script>
+    <script src="assets/js/bootstrap-tooltip.js"></script>
+    <script src="assets/js/bootstrap-popover.js"></script>
+    <script src="assets/js/bootstrap-button.js"></script>
+    <script src="assets/js/bootstrap-collapse.js"></script>
+    <script src="assets/js/bootstrap-carousel.js"></script>
+    <script src="assets/js/bootstrap-typeahead.js"></script>
+
+
+    <!-- Backbone Libraries -->
+    <script type="text/javascript" src='javascripts/libs/underscore.js'></script>
+    <script type="text/javascript" src='javascripts/libs/backbone.js'></script>
+    <script type="text/javascript" src='javascripts/views/Extensions.js'></script>
+    <script src="javascripts/libs/backbone.paginator.js"></script>
+    
+    <!-- Main App -->
+    
+    <script type="text/javascript" src='javascripts/app.js'></script>
+    
+    <!-- Models and Collections -->
+    <script type="text/javascript" src="javascripts/models/Task.js" ></script>
+    <script type="text/javascript" src="javascripts/models/Project.js" ></script>
+    <script type="text/javascript" src="javascripts/collections/ProjectsCollection.js" ></script>
+    <script type="text/javascript" src="javascripts/collections/TasksCollection.js" ></script>
+    
+    <!-- Views -->
+    <script type="text/javascript" src="javascripts/views/CentralContainer.js"></script>
+    <script type="text/javascript" src="javascripts/views/SidebarView.js"></script>
+    <script type="text/javascript" src="javascripts/views/ProjectsContainer.js" ></script>
+    <script type="text/javascript" src="javascripts/views/ProjectsView.js" ></script>
+     <script type="text/javascript" src="javascripts/views/TasksContainer.js" ></script>
+    <script type="text/javascript" src="javascripts/views/TasksView.js" ></script>
+    <script type="text/javascript" src="javascripts/views/SingleProjectView.js" ></script>
+    <script type="text/javascript" src="javascripts/views/SingleTaskView.js" ></script>
+    <script type="text/javascript" src="javascripts/views/ProjectsPager.js" ></script>
+    <script type="text/javascript" src="javascripts/views/TasksPager.js" ></script>
+
+    <!-- Routes -->
+    <script type="text/javascript" src="javascripts/routers/AppRoutes.js"></script>
+
+    </body>
 </html>

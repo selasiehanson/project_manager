@@ -1,0 +1,39 @@
+.hero-unit {
+	background : none;
+	padding: 0;
+}
+
+.actions{
+	background : none;
+}
+
+.list_view li{
+	list-style: none;
+	padding-top: 15px;
+}
+
+.list_view .accordion a{
+	text-decoration : none;
+	color: #D70;
+	
+}
+
+.list_view .accordion .accordion-inner a{
+	color: #08C;
+}
+
+.list_view li i{
+	padding-right : 5px;
+}
+
+
+.navbar.navbar-static.navbar_as_heading .navbar-inner{
+	margin: -20px -20px 20px -20px;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+}
+
+.navbar.navbar-static.navbar_as_heading .navbar-inner .brand{
+	
+} 
