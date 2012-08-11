@@ -4,6 +4,7 @@ window.app =
 	models: {},
 	routes : {},
 	project : {}
+	charts : {}
 $ ->
 	app.project["title"] = null
 	app.project["id"] = null
@@ -11,5 +12,6 @@ $ ->
 	app.collections.tasksCollection = new app.collections.TasksCollection();
 	app.views.centralPane =  new app.views.CentralContainer()
 	app.routes.navigator = new app.routes.Navigator();
-	##app.routes.navigator.start()
+
+	# app.routes.navigator.start()
 	return

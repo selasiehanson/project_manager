@@ -1,6 +1,6 @@
 ((views,models) ->
 	views.ProjectsContainer = Backbone.View.extend
-		el : $("#projects_container")
+		# el : $("#projects_container")
 		template : _.template($("#projects-container-tmpl").text())
 		events: 
 	        'keypress #new_project':  'createNewProject'
@@ -42,6 +42,8 @@
 			this.$el.empty()
 			html = this.template({})
 			this.$el.html html
+			$("#projects_container").html this.el
+			
 			if views.projectsView
 				views.projectsView.onClose
 			

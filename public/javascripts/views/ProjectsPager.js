@@ -43,7 +43,6 @@
       },
       render: function() {
         var html;
-        console.log("rendered");
         $(this.el).empty();
         html = this.template({
           page: this.collection.info(),

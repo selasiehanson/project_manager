@@ -9,18 +9,24 @@
         "projects/task/:id": 'showTasks',
         'project/all': 'showProjects',
         'tasks/summary': 'showSummarizedTasks',
-        'tasks/:id': 'showTaskInfo'
+        'tasks/:id': 'showTaskInfo',
+        "dashboard": 'showDashboard',
+        "*actions": 'defaultRoute'
       },
       initialize: function() {
         Backbone.history.start();
         return this;
       },
       defaultRoute: function() {
-        var self;
-        self = this;
-        this.showSummarizedTasks();
+        return this.showDashboard();
+      },
+      createPTView: function() {
+        var ptView;
+        ptView = new views.PTView();
+        views.centralPane.showView(ptView);
       },
       showProjects: function() {
+        this.createPTView();
         collections.ProjectsCollection.fetch({
           success: function(col, res) {
             var view;
@@ -63,6 +69,12 @@
           _project.title = null;
           _project.id = null;
         }
+      },
+      showDashboard: function() {
+        var dashboard;
+        dashboard = new views.Dashboard();
+        views.centralPane.showView(dashboard);
+        dashboard.updateGraphs();
       },
       showTaskInfo: function(id) {},
       clearTaskInfo: function() {

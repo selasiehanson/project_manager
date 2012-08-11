@@ -20,7 +20,6 @@
 			this.collection.off 'reset', this.reset
 			return
 		reset : () ->
-			console.log "xxx"
 			this.$el.empty();
 			this.collection.each(this.addOne)
 		

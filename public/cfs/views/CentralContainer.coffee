@@ -3,13 +3,13 @@
 		el : $("#stage")
 		initialize : () ->
 		
-		showView(view) ->
+		showView : (view) ->
 			if this.currentView
 				this.currentView.close()
 			this.currentView = view
-			this.currentView.render
+			this.currentView.render()
 
-			this.el.html this.currentView.el
+			this.$el.html this.currentView.el
 			return
 
 	return

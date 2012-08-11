@@ -4,15 +4,16 @@
   (function(views) {
     views.CentralContainer = Backbone.View.extend({
       el: $("#stage"),
-      initialize: function() {}
-    }, showView(view)(function() {
-      if (this.currentView) {
-        this.currentView.close();
+      initialize: function() {},
+      showView: function(view) {
+        if (this.currentView) {
+          this.currentView.close();
+        }
+        this.currentView = view;
+        this.currentView.render();
+        this.$el.html(this.currentView.el);
       }
-      this.currentView = view;
-      this.currentView.render;
-      this.el.html(this.currentView.el);
-    }));
+    });
   })(app.views);
 
 }).call(this);

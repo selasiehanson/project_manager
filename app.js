@@ -4,7 +4,8 @@
  */
 
 var express = require('express')
-  , routes = require('./routes');
+var routes = require('./routes');
+var dashRoutes = require('./routes/dashboard');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/project_manager_dev');
 //mongoose.connect('mongodb://localhost/project_manager_live');
@@ -15,10 +16,6 @@ var app = module.exports = express.createServer();
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
-  //app.set('view engine', 'jade');
-  //app.set('view engine', 'ejs');
-  //app.set('view options' , {layout : false});
-
   // disable layout
   app.set("view options", {layout: false});
 
@@ -60,6 +57,11 @@ app.get('/tasks',routes.getTasks);
 app.post('/tasks',routes.createTask);
 app.put('/tasks/:id',routes.updateTask);
 app.del('/tasks/:id',routes.deleteTask);
+
+//Dashboard
+app.get("/getBigData",dashRoutes.getBigData);
+app.get("/getPieSummary/:pieType", dashRoutes.getPieSummary);
+
 
 app.listen(3001);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

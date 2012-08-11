@@ -1,4 +1,4 @@
-((routes,collections, views, _project)->
+((routes,collections, views, _project) ->
 	routes.Navigator = Backbone.Router.extend
 		data: null
 		view : null
@@ -7,10 +7,9 @@
 			'project/all' : 'showProjects'
 			'tasks/summary' : 'showSummarizedTasks' 
 			'tasks/:id' : 'showTaskInfo'
-			# '*actions' : 'defaultRoute'	
+			"dashboard" : 'showDashboard'
 			# '/' : 'defaultRoute'	
-		
-	
+			"*actions" : 'defaultRoute'
 		initialize :  () ->
 			##Backbone.history.loadUrl()
 			Backbone.history.start()
@@ -18,13 +17,16 @@
 			return this
 		
 		defaultRoute :  () ->
-			self =  this
-			this.showSummarizedTasks()
+			this.showDashboard()
+		
+		createPTView : () ->
+			ptView = new views.PTView()
+			views.centralPane.showView ptView
 			return
-			
-		showProjects : ()-> 
+
+		showProjects : () -> 
 			#todo
-			#create projectAndTasksView and attach it to the central pane
+			this.createPTView()
 			collections.ProjectsCollection.fetch
 				success : (col, res) ->
 					collections.ProjectsCollection.pager()
@@ -34,8 +36,7 @@
 					view.render()
 					return 
 			return
-			
-		
+					
 		showTasks :  (id) ->
 			self = this
 			id = $.trim(id)
@@ -46,14 +47,12 @@
 				_project.title = project.get("title")
 				_project.id = id
 				
-				collections.tasksCollection.close();
+				collections.tasksCollection.close()
 				collections.tasksCollection = new app.collections.TasksCollection() 
 				collections.tasksCollection.fetch
 					data : 
 						projectId : id 
-					
 					success :  () ->
-						
 						collections.tasksCollection.pager()
 						if views.tasksContainer
 							views.tasksContainer.onClose()
@@ -61,7 +60,6 @@
 						views.tasksContainer = new views.TasksContainer
 							collection : collections.tasksCollection
 						views.tasksContainer.render()
-						
 						
 						##todo: set the first item as selected
 					
@@ -77,6 +75,12 @@
 			##$(".active").removeClass("active")
             ##$("#" + project.cid).addClass("active")
 		
+		showDashboard : () ->
+			dashboard =  new views.Dashboard()
+			views.centralPane.showView dashboard
+			dashboard.updateGraphs()
+			return
+
 		showTaskInfo :  (id) ->
 			# id = $.trim(id)
 			# task = collections.TasksCollection.get(id)

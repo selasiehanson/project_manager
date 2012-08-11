@@ -7,6 +7,7 @@
 			'mouseout .menu-item' : 'hideControls'
 			'click button.delete_link' : 'deleteProject'
 			'click button.edit_link' : 'editProject'
+			'keypress .edit' : 'updateOnEnter'
 			
 		initialize :  () ->
 			this.model.on 'change', this.render, this
@@ -32,12 +33,25 @@
 			this.input.val(this.model.get('title'))
 			this.input.focus
 			return
-		
+		updateOnEnter : (e) ->
+	    	if e.keyCode is 13
+	    		this.close()
+	    	return
+
+	    close : () ->
+	    	value = this.input.val()
+	    	if not value
+	    		this.clear() 
+	    	
+	    	this.model.save(title : value)
+	    	this.$el.removeClass "editing"
+	    	return
+
 		clearInput : (e) ->
 			
 			text = $.trim(this.input.val());
 			if(text.toLocaleLowerCase() == "create new project")
-				this.input.val("")
+				this.input.val ""
 		
 		
 		render : () ->

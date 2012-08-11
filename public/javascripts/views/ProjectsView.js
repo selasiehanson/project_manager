@@ -22,7 +22,6 @@
         this.collection.off('reset', this.reset);
       },
       reset: function() {
-        console.log("xxx");
         this.$el.empty();
         return this.collection.each(this.addOne);
       },

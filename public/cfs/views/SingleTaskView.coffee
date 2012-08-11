@@ -47,12 +47,14 @@
 	    	this.model.save(title : value)
 	    	this.$el.removeClass("editing")
 	    	return
+
 		onClose : () ->
 			this.model.off "change", this.render
 			this.model.off "destroy", this.remove
 			return
+
 		render : () ->
-			##convert these to lower case
+			#convert these to lower case
 			title = this.model.get("title")
 			title = title[0].toUpperCase() + title.slice(1)
 			this.model.set(title : title)

@@ -10,10 +10,8 @@
 		initialize : () ->
 			this.collection.on 'add', this.addOne,this
 			this.collection.on 'reset', this.reset,this
-			
 			return
 		onClose : () ->
-			console.log "closing tasks view"
 			this.collection.off "add", this.addOne
 			this.collection.off "reset", this.reset
 			return	

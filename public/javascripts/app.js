@@ -6,7 +6,8 @@
     collections: {},
     models: {},
     routes: {},
-    project: {}
+    project: {},
+    charts: {}
   };
 
   $(function() {

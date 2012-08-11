@@ -65,6 +65,7 @@ body {
 	overflow: hidden;*/
 	background: white;
 	margin-top: 20px;
+	border : 1px solid #E5E5E5;
 }
 
 #content #right {
@@ -317,7 +318,8 @@ input[type='text'] {
 .hero-unit {
 	margin-top : 20px;
 	background : none;
-	/*padding: 0;*/
+	padding: 0px 20px;
+	min-height: 640px;
 }
 
 .actions{
@@ -358,6 +360,7 @@ input[type='text'] {
 .list_view .accordion .accordion-inner {
 	background: white
 }
+
 .list_view li i{
 	padding-right : 5px;
 }
@@ -398,7 +401,6 @@ input[type='text'] {
 	line-height: 26px;
 }
 
-
 .pagination a {
 	border: 1px solid #AAA;
 	border-left-width: 0;
@@ -413,5 +415,20 @@ input[type='text'] {
 
 #tasks_project_header {
 	width: 80%;
-	color: #333;	
+	color: #333;
+}
+
+.pj_graphs .accordion-heading .accordion-toggle{
+	background: #82A6CA;
+	color: white;
+	text-transform: uppercase;
+}
+
+.pj_graphs .accordion-heading a.accordion-toggle:hover {
+	text-decoration: none;
+}
+footer {
+	background: #82A6CA;
+	color: white;
+	padding: 10px 10px 4px;
 }

@@ -10,7 +10,6 @@
         this.collection.on('reset', this.reset, this);
       },
       onClose: function() {
-        console.log("closing tasks view");
         this.collection.off("add", this.addOne);
         this.collection.off("reset", this.reset);
       },

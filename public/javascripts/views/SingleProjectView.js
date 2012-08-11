@@ -9,7 +9,8 @@
         'mouseover .menu-item': 'showControls',
         'mouseout .menu-item': 'hideControls',
         'click button.delete_link': 'deleteProject',
-        'click button.edit_link': 'editProject'
+        'click button.edit_link': 'editProject',
+        'keypress .edit': 'updateOnEnter'
       },
       initialize: function() {
         this.model.on('change', this.render, this);
@@ -32,6 +33,22 @@
         this.$el.addClass("editing");
         this.input.val(this.model.get('title'));
         this.input.focus;
+      },
+      updateOnEnter: function(e) {
+        if (e.keyCode === 13) {
+          this.close();
+        }
+      },
+      close: function() {
+        var value;
+        value = this.input.val();
+        if (!value) {
+          this.clear();
+        }
+        this.model.save({
+          title: value
+        });
+        this.$el.removeClass("editing");
       },
       clearInput: function(e) {
         var text;

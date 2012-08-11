@@ -3,7 +3,6 @@
 
   (function(views, models, _project) {
     views.TasksContainer = Backbone.View.extend({
-      el: $('#tasks_container'),
       template: _.template($("#tasks-container-tmpl").text()),
       events: {
         'keypress #new_todo': 'createNewTask',
@@ -14,7 +13,6 @@
         return this.collection.on("destroy", this.modelRemoved, this);
       },
       change: function() {
-        console.log("collection has changed");
         return this.updatePager();
       },
       clearInput: function(e) {
@@ -36,6 +34,7 @@
         this.$el.empty();
         html = this.template({});
         this.$el.html(html);
+        $('#tasks_container').html(this.el);
         this.updatePager();
         this.updateView();
         this.input = $("#new_todo");
@@ -65,15 +64,17 @@
         return $("#tasks_navigation").html(views.tasksPager.render().el);
       },
       computeStats: function() {
-        var cols, done, remaining, stats;
+        var all, cols, done, remaining, stats, _cols;
         cols = this.collection;
-        done = cols.where({
-          status: "done"
+        _cols = this.collection.origModels;
+        all = _.select(_cols, function(n) {
+          return n.get("status") === "done";
         });
-        remaining = cols.info().totalRecords - done.length;
+        done = all.length;
+        remaining = cols.info().totalRecords - done;
         return stats = {
           remaining: remaining,
-          done: done.length
+          done: done
         };
       },
       createNewTask: function(e) {

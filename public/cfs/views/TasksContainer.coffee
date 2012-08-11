@@ -1,7 +1,5 @@
 ((views, models,_project) ->
 	views.TasksContainer =  Backbone.View.extend
-		el : $('#tasks_container')
-
 		template : _.template($("#tasks-container-tmpl").text())
 	
 		events: 
@@ -12,8 +10,8 @@
 	    	this.collection.on "change", this.change , this
 	    	this.collection.on "destroy", this.modelRemoved, this
 	    change : () ->
-	    	console.log "collection has changed"
 	    	this.updatePager()
+	    	
 	    clearInput : (e) ->
 	    	text = $.trim(this.input.val())
 	    	if(text.toLocaleLowerCase() == "create new task")
@@ -29,7 +27,7 @@
 			this.$el.empty()
 			html = this.template({})
 			this.$el.html html
-			
+			$('#tasks_container').html this.el
 			
 			this.updatePager()
 			this.updateView()
@@ -56,13 +54,18 @@
 						template : "#tasks_pagination-tmpl"
 						stats : self.computeStats()
 			$("#tasks_navigation").html views.tasksPager.render().el
+
 		computeStats : () ->
 			cols = this.collection
-			done = cols.where status : "done"
-			remaining = cols.info().totalRecords - done.length
+			_cols = this.collection.origModels
+			all = _.select  _cols, (n) ->
+				n.get("status") == "done"
+
+			done  = all.length
+			remaining = cols.info().totalRecords - done
 			stats = 
 				remaining : remaining
-				done : done.length
+				done : done
 
 		createNewTask : (e) ->
 			text = this.input.val()
